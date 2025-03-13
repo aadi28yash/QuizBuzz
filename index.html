@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Buzz - Interactive Learning Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%);
+      --text-color: #333;
+      --container-bg: #fff;
+      --input-bg: #fff;
+      --input-border: #ddd;
+      --button-bg: #6200ea;
+      --button-text: #fff;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: linear-gradient(135deg, #2c1810 0%, #1a1a2e 100%);
+      --text-color: #fff;
+      --container-bg: #2d2d3f;
+      --input-bg: #3f3f53;
+      --input-border: #4a4a5f;
+      --button-bg: #7c4dff;
+      --button-text: #fff;
+    }
+
+    body {
+      background: var(--bg-color);
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text-color);
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      background: var(--container-bg);
+      transition: all 0.3s ease;
+    }
+
+    input, select {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text-color);
+    }
+
+    button {
+      background: var(--button-bg);
+      color: var(--button-text);
+    }
+
+    /* Dark Mode Toggle Styles */
+    .theme-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme-switch-toggle {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      border-radius: 15px;
+      background: #ddd;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .theme-switch-toggle::after {
+      content: '🌞';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] .theme-switch-toggle::after {
+      content: '🌙';
+      transform: translateX(30px);
+      background: #3f3f53;
+    }
+
+    /* Popup Styles */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      backdrop-filter: blur(3px);
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--container-bg);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      z-index: 1001;
+      min-width: 300px;
+      max-width: 90%;
+      text-align: center;
+      animation: popupFadeIn 0.3s ease-out;
+    }
+
+    .popup-header {
+      margin-bottom: 20px;
+    }
+
+    .popup-header h3 {
+      color: var(--text-color);
+      font-size: 1.5em;
+      margin: 0;
+    }
+
+    .popup-content {
+      margin-bottom: 25px;
+      color: var(--text-color);
+      font-size: 1.1em;
+      line-height: 1.4;
+    }
+
+    .popup-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .popup-close {
+      background: var(--button-bg);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+      min-width: 120px;
+    }
+
+    .popup-close:not(:disabled):hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .popup-close:disabled {
+      background: #666;
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
+    @keyframes popupFadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    @keyframes popupFadeOut {
+      from {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+      to {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, rgba(98, 0, 234, 0.1) 0%, rgba(236, 64, 122, 0.1) 100%);
+      border-radius: 20px;
+      margin-bottom: 40px;
+    }
+
+    .hero-title {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #6200ea, #ec407a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleAnimation 1s ease-out;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5em;
+      color: #666;
+      margin-bottom: 40px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 40px 20px;
+      animation: fadeSlideUp 0.8s ease-out;
+    }
+
+    .feature-card {
+      background: var(--container-bg);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .feature-icon {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1);
+    }
+
+    .feature-title {
+      font-size: 1.3em;
+      margin-bottom: 15px;
+      color: var(--text-color);
+    }
+
+    .feature-description {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .auth-buttons {
+      margin-top: 40px;
+    }
+
+    .auth-buttons button {
+      padding: 15px 40px;
+      font-size: 1.1em;
+      margin: 0 15px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .auth-buttons button:first-child {
+      background: linear-gradient(45deg, #6200ea, #7c4dff);
+    }
+
+    .auth-buttons button:last-child {
+      background: linear-gradient(45deg, #ec407a, #f48fb1);
+    }
+
+    @keyframes titleAnimation {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Add responsive styles */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5em;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2em;
+      }
+
+      .auth-buttons button {
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-switch">
+    <div class="theme-switch-toggle" onclick="toggleTheme()"></div>
+  </div>
+
+  <div class="container">
+    <div class="hero-section">
+      <h1 class="hero-title">Welcome to Quiz Buzz</h1>
+      <p class="hero-subtitle">Engage, Learn, and Excel with Interactive Quizzes</p>
+      
+      <div class="auth-buttons">
+        <button onclick="window.location.href='login.html'">
+          <i class="fas fa-sign-in-alt"></i> Get Started
+        </button>
+        <button onclick="window.location.href='register.html'">
+          <i class="fas fa-user-plus"></i> Join Now
+        </button>
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fas fa-brain feature-icon"></i>
+        <h3 class="feature-title">Interactive Learning</h3>
+        <p class="feature-description">Engage with dynamic quizzes designed to enhance your learning experience</p>
+      </div>
+      
+      <div class="feature-card">
+        <i class="fas fa-chart-line feature-icon"></i>
+        <h3 class="feature-title">Track Progress</h3>
+        <p class="feature-description">Monitor your performance with detailed analytics and insights</p>
+      </div>
+      
+      <div class="feature-card">
+        <i class="fas fa-users feature-icon"></i>
+        <h3 class="feature-title">Community Driven</h3>
+        <p class="feature-description">Join a community of learners and educators sharing knowledge</p>
+      </div>
+      
+      <div class="feature-card">
+        <i class="fas fa-medal feature-icon"></i>
+        <h3 class="feature-title">Earn Achievements</h3>
+        <p class="feature-description">Get rewarded for your progress with badges and certificates</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+  </script>
+</body>
+</html>

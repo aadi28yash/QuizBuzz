@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz - Quiz Master</title>
+    <link rel="stylesheet" href="add_quiz.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Create New Quiz</h1>
+                <button onclick="location.href='teacher_dashboard.html'" class="secondary-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <form id="quizForm">
+                <!-- Quiz Settings Section -->
+                <section class="quiz-settings">
+                    <h2>Quiz Settings</h2>
+                    <div class="form-group">
+                        <label for="quizTitle">Quiz Title:</label>
+                        <input type="text" id="quizTitle" placeholder="Enter quiz title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quizDuration">Quiz Duration:</label>
+                        <div class="duration-inputs">
+                            <input type="number" id="quizDuration" min="1" placeholder="Enter duration" required>
+                            <select id="timeUnit">
+                                <option value="minutes">Minutes</option>
+                                <option value="seconds">Seconds</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Question Form Section -->
+                <section class="question-form">
+                    <h2>Add Questions</h2>
+                    <div class="form-group">
+                        <label for="questionText">Question:</label>
+                        <textarea id="questionText" placeholder="Type your question here" rows="3" required></textarea>
+                    </div>
+
+                    <div class="options-grid">
+                        <div class="form-group">
+                            <label for="optionA">Option A:</label>
+                            <input type="text" id="optionA" placeholder="Enter option A" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="optionB">Option B:</label>
+                            <input type="text" id="optionB" placeholder="Enter option B" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="optionC">Option C:</label>
+                            <input type="text" id="optionC" placeholder="Enter option C" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="optionD">Option D:</label>
+                            <input type="text" id="optionD" placeholder="Enter option D" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correctAnswer">Correct Answer:</label>
+                        <select id="correctAnswer" required>
+                            <option value="">Select correct option</option>
+                            <option value="A">Option A</option>
+                            <option value="B">Option B</option>
+                            <option value="C">Option C</option>
+                            <option value="D">Option D</option>
+                        </select>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" id="addNextQuestion" class="primary-btn">Add Question</button>
+                        <button type="button" id="clearQuestion" class="secondary-btn">Clear Form</button>
+                    </div>
+                </section>
+
+                <!-- Questions List Section -->
+                <section class="questions-list">
+                    <div class="section-header">
+                        <h2>Added Questions</h2>
+                        <div class="question-count">Total Questions: 0</div>
+                    </div>
+                    <div id="questionsContainer">
+                        <!-- Questions will be added here dynamically -->
+                    </div>
+                </section>
+
+                <!-- Submit Section -->
+                <section class="submit-section">
+                    <div class="quiz-summary">
+                        <h3>Quiz Summary</h3>
+                        <p id="summaryTitle">Title: Not set</p>
+                        <p id="summaryDuration">Duration: Not set</p>
+                        <p id="summaryQuestions">Questions: 0</p>
+                    </div>
+                    <button type="submit" class="submit-btn" id="createQuizBtn">Create Quiz</button>
+                </section>
+            </form>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Quiz Master. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts at the bottom, in correct order -->
+    <script src="utils.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        // Single authentication check
+        function checkTeacherAuth() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            console.log('Add Quiz - Current user:', currentUser);
+            
+            if (!currentUser || !currentUser.isAuthenticated || currentUser.role !== 'teacher') {
+                console.log('Auth check failed:', {
+                    hasUser: !!currentUser,
+                    isAuthenticated: currentUser?.isAuthenticated,
+                    role: currentUser?.role
+                });
+                alert('Please login as a teacher to create quizzes.');
+                window.location.href = 'index.html';
+                return false;
+            }
+            return true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (checkTeacherAuth()) {
+                // Only set teacher name if auth check passes
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                document.getElementById('teacherName').textContent = currentUser.name;
+            }
+        });
+    </script>
+    <script src="add_quiz.js"></script>
+</body>
+</html>

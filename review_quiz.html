@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Quiz - Quiz Buzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="review_quiz.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="quiz-info">
+                <h1 id="quizTitle">Quiz Review</h1>
+                <button onclick="location.href='student_dashboard.html'" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="review-container">
+                <div class="quiz-summary">
+                    <h2>Quiz Results</h2>
+                    <p>Score: <span id="scoreDisplay">0/0</span></p>
+                    <p>Percentage: <span id="percentageDisplay">0%</span></p>
+                </div>
+
+                <div id="questionsReview" class="questions-review">
+                    <!-- Questions will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="auth.js"></script>
+    <script src="review_quiz.js"></script>
+</body>
+</html> 

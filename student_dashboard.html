@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Quiz Buzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="student_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome, <span id="studentName"></span></h1>
+            <button onclick="logout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </header>
+
+        <main>
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Completed Quizzes</h3>
+                    <p id="completedQuizzes">0</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <h3>Average Score</h3>
+                    <p id="averageScore">0%</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Available Quizzes</h3>
+                    <p id="availableQuizzes">0</p>
+                </div>
+            </div>
+
+            <div class="quiz-sections">
+                <section class="available-quizzes">
+                    <h2>Available Quizzes</h2>
+                    <div id="availableQuizList" class="quiz-grid">
+                        <!-- Available quizzes will be loaded here -->
+                    </div>
+                </section>
+
+                <section class="completed-quizzes">
+                    <h2>Your Completed Quizzes</h2>
+                    <div id="completedQuizList" class="quiz-grid">
+                        <!-- Completed quizzes will be loaded here -->
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="auth.js"></script>
+    <script src="student_dashboard.js"></script>
+</body>
+</html>

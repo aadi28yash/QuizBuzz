@@ -1,0 +1,443 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #1a73e8;
+    --primary-hover: #1557b0;
+    --success-color: #34a853;
+    --success-hover: #2d8e47;
+    --warning-color: #fbbc05;
+    --warning-hover: #f9ab00;
+    --danger-color: #ea4335;
+    --danger-hover: #d33828;
+    --light-bg: #f0f2f5;
+    --white: #ffffff;
+    --shadow: 0 2px 5px rgba(0,0,0,0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --button-bg: #6200ea;
+    --button-text: #ffffff;
+    --container-bg: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #dddddd;
+}
+
+[data-theme="dark"] {
+    --button-bg: #7c4dff;
+    --button-text: #ffffff;
+    --container-bg: #2d2d3f;
+    --input-bg: #3f3f53;
+    --input-border: #4a4a5f;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background: var(--light-bg);
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    padding: 40px 0;
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    transform: translateY(-10px);
+    animation: slideDown 0.5s ease-out forwards;
+}
+
+header h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: var(--transition);
+}
+
+header h1:hover::after {
+    width: 100%;
+}
+
+/* Main Content Styles */
+main {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeSlideUp 0.5s ease-out forwards;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    transition: var(--transition);
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: var(--transition);
+    background: var(--white);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
+    transform: translateY(-2px);
+}
+
+button {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255,255,255,0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+button:active::after {
+    animation: ripple 0.6s ease-out;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+    text-align: center;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeSlideUp 0.5s ease-out forwards;
+}
+
+.auth-buttons button {
+    margin: 0 10px;
+    min-width: 120px;
+}
+
+/* Hidden Class */
+.hidden {
+    display: none;
+}
+
+/* Form Container */
+#auth-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    opacity: 0;
+    animation: fadeSlideUp 0.5s ease-out forwards;
+}
+
+#auth-form h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    position: relative;
+}
+
+#auth-form h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: var(--primary-color);
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    color: #666;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 0.5s forwards;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(100, 100);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 20px 0;
+    }
+    
+    main {
+        padding: 20px;
+    }
+    
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .auth-buttons button {
+        margin: 5px 0;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+}
+
+/* Icon styles */
+.fas {
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+button:hover .fas {
+    transform: translateX(2px);
+}
+
+.stat-card:hover .fas {
+    transform: scale(1.1);
+}
+
+.stat-card .fas {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .stat-card .fas {
+    color: #bb86fc;
+}
+
+.timer .fas {
+    color: var(--timer-text);
+}
+
+.popup-header .fas {
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+
+.form-group .fas {
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .form-group .fas {
+    color: #bb86fc;
+}
+
+[data-theme="dark"] .fas {
+    color: inherit;
+}
+
+[data-theme="dark"] .popup-header .fas {
+    color: inherit;
+}
+
+[data-theme="dark"] button .fas {
+    color: var(--button-text);
+}
+
+.popup-header .fas.fa-exclamation-circle {
+    animation: pulse 2s infinite;
+}
+
+.popup-header .fas.fa-check-circle {
+    animation: bounceIn 0.5s ease-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Add Loading Spinner */
+.spinner {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+    z-index: 2000;
+}
+
+.spinner-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    z-index: 1999;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Add these styles for logout button */
+.secondary-btn.logout-btn {
+    background-color: var(--danger-color);
+    color: white;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.secondary-btn.logout-btn:hover {
+    background-color: var(--danger-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(234, 67, 53, 0.2);
+}
+
+.secondary-btn.logout-btn .fas {
+    color: white;
+}
+
+[data-theme="dark"] .popup {
+    background: var(--container-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .popup-close {
+    background: var(--button-bg);
+    color: var(--button-text);
+}
+
+[data-theme="dark"] .popup-close:disabled {
+    background: #666;
+}
+  

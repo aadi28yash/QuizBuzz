@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Quiz Buzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="teacher_dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome, <span id="teacherName"></span></h1>
+            <div class="header-buttons">
+                <button onclick="createNewQuiz()" class="create-quiz-btn">
+                    <i class="fas fa-plus"></i> Create New Quiz
+                </button>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+        <main>
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>Total Quizzes</h3>
+                    <p id="totalQuizzes">0</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Total Students</h3>
+                    <p id="totalStudents">0</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Average Score</h3>
+                    <p id="averageScore">0%</p>
+                </div>
+            </div>
+
+            <div class="quiz-list-section">
+                <h2>Your Quizzes</h2>
+                <div id="quizList" class="quiz-grid">
+                    <!-- Quiz cards will be added here dynamically -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="auth.js"></script>
+    <script src="teacher_dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                console.log('Dashboard - Current user:', currentUser);
+                
+                if (!currentUser || !currentUser.isAuthenticated || currentUser.role !== 'teacher') {
+                    console.log('Auth check failed:', {
+                        hasUser: !!currentUser,
+                        isAuthenticated: currentUser?.isAuthenticated,
+                        correctRole: currentUser?.role === 'teacher'
+                    });
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                console.log('Auth successful');
+                
+            } catch (error) {
+                console.error('Dashboard error:', error);
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

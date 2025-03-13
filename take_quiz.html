@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Quiz - Quiz Buzz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="take_quiz.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="quiz-info">
+                <h1 id="quizTitle">Loading Quiz...</h1>
+                <div class="quiz-meta">
+                    <span id="questionCounter">Question 0 of 0</span>
+                    <span id="timer">Time: 00:00</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="quiz-container">
+                <div id="questionText" class="question-text">
+                    Loading question...
+                </div>
+
+                <div class="options-container" id="optionsContainer">
+                    <button class="option-btn" data-option="A">
+                        <span class="option-label">A</span>
+                        <span class="option-text">Loading...</span>
+                    </button>
+                    <button class="option-btn" data-option="B">
+                        <span class="option-label">B</span>
+                        <span class="option-text">Loading...</span>
+                    </button>
+                    <button class="option-btn" data-option="C">
+                        <span class="option-label">C</span>
+                        <span class="option-text">Loading...</span>
+                    </button>
+                    <button class="option-btn" data-option="D">
+                        <span class="option-label">D</span>
+                        <span class="option-text">Loading...</span>
+                    </button>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button id="prevBtn" class="nav-btn" disabled>
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button id="nextBtn" class="nav-btn">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button id="submitBtn" class="submit-btn" style="display: none;">
+                        Submit Quiz
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="auth.js"></script>
+    <script src="take_quiz.js"></script>
+</body>
+</html> 
